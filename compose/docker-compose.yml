@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+  zookeeper:
+    image: wurstmeister/zookeeper:3.4.6
+    ports:
+      - 2181:2181
+    logging:
+      options: {max-size: 50m, max-file: '3'}
+
+  kafka:
+    image: wurstmeister/kafka:2.12-2.3.0
+    healthcheck:
+#      kafka create topics sequentially, so wait till the last topic will be created
+      test: "echo $${KAFKA_CREATE_TOPICS##*,} | grep $$(kafka-topics.sh --zookeeper zookeeper:2181 --list 2>&1 | tail -n1)"
+      interval: 5s
+      timeout: 10s
+      retries: 3
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: kafka
+      KAFKA_ADVERTISED_PORT: 9092
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'false'
+      MAX_MSG_BYTES: '10000000'
+      TZ: Europe/Kiev
+      KAFKA_CREATE_TOPICS_SEPARATOR: ","
+      KAFKA_CREATE_TOPICS: "test-topic:1:1"
+    ports:
+      - 9092:9092
+    depends_on:
+      - zookeeper
+
+  postgres:
+    image: postgres:11.4
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=temp
+      - POSTGRES_DB=ps_db
+      - TZ=Europe/Kiev
+    ports:
+      - 5432:5432
