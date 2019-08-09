@@ -1,0 +1,63 @@
+buildscript {
+	repositories {
+		jcenter()
+		mavenCentral()
+		maven { url "https://repo.spring.io/libs-snapshot" }
+		maven { url "https://repo.spring.io/libs-release" }
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion")
+		classpath("io.spring.gradle:dependency-management-plugin:$depManagementPluginVersion")
+	}
+}
+
+import com.bmuschko.gradle.docker.tasks.container.*
+
+plugins {
+	id 'com.bmuschko.docker-remote-api' version '4.10.0'
+}
+
+apply plugin: "java"
+apply plugin: "application"
+apply plugin: 'com.bmuschko.docker-java-application'
+apply plugin: 'com.bmuschko.docker-remote-api'
+apply plugin: "idea"
+apply plugin: "org.springframework.boot"
+apply plugin: "io.spring.dependency-management"
+
+sourceCompatibility = '11'
+targetCompatibility = '11'
+
+mainClassName="com.newage.signupservice.SignupServiceApplication"
+
+docker {
+	javaApplication {
+		baseImage = 'openjdk:11-jre-slim'
+		tag = "${project.name}:${project.version}"
+		ports = [8080]
+	}
+}
+
+task buildDocker(type: DockerCreateContainer) {
+	dependsOn build, dockerBuildImage
+	targetImageId { dockerBuildImage.getImageId().get() }
+}
+
+dependencies {
+	compileOnly("org.projectlombok:lombok:${lombokVersion}")
+	annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
+
+	implementation("org.springframework.boot:spring-boot-starter")
+	implementation("org.springframework.boot:spring-boot-starter-web")
+	implementation("org.springframework.boot:spring-boot-starter-actuator")
+	implementation("org.springframework.kafka:spring-kafka:$springKafkaVersion")
+
+	testCompileOnly("org.projectlombok:lombok:${lombokVersion}")
+	testAnnotationProcessor("org.projectlombok:lombok:${lombokVersion}")
+
+	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	testImplementation("org.springframework.boot:spring-boot-starter-web")
+	testImplementation("org.springframework.kafka:spring-kafka-test:$springKafkaVersion")
+
+	//runtime("org.postgresql:postgresql:$postgresVersion")
+}
