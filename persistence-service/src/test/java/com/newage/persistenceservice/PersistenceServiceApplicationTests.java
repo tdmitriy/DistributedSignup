@@ -1,16 +1,49 @@
 package com.newage.persistenceservice;
 
+import com.newage.persistenceservice.model.entity.Player;
+import com.newage.persistenceservice.repository.PlayerRepository;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.beans.factory.annotation.Autowired;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
-public class PersistenceServiceApplicationTests {
+import java.time.Instant;
+import java.util.List;
+import java.util.Optional;
 
-	@Test
-	public void contextLoads() {
-	}
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
+public class PersistenceServiceApplicationTests extends AbstractApplicationTest {
+
+    @Test
+    public void playerRepositoryTest() {
+        Player player = new Player();
+        player.setEmail("xyi");
+        player.setPassword("xyi");
+        player.setSignUpDateTime(Instant.now());
+
+        Player saved = playerRepository.save(player);
+        assertNotNull(saved);
+
+        Optional<Player> found = playerRepository.findById(saved.getId());
+        assertTrue(found.isPresent());
+
+        List<Player> all = playerRepository.findAll();
+    }
+
+    @Test
+    public void xx() {
+        Player player = new Player();
+        player.setEmail("sss");
+        player.setPassword("sss");
+        player.setSignUpDateTime(Instant.now());
+
+        Player saved = playerRepository.save(player);
+        assertNotNull(saved);
+
+        Optional<Player> found = playerRepository.findById(saved.getId());
+        assertTrue(found.isPresent());
+
+        List<Player> all = playerRepository.findAll();
+    }
 
 }
