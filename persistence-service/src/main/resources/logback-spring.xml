@@ -11,6 +11,9 @@
     </appender>
 
     <logger name="com.newage" level="DEBUG"/>
+    <logger name="org.springframework.transaction" level="TRACE"/>
+    <logger name="org.springframework.kafka.transaction" level="TRACE"/>
+    <logger name="org.springframework.jdbc" level="DEBUG"/>
     <logger name="org.springframework" level="WARN"/>
     <logger name="org.apache.kafka" level="ERROR"/>
     <logger name="liquibase" level="WARN"/>

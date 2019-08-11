@@ -22,7 +22,7 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQL94Dialect
         format_sql: true
         temp.use_jdbc_metadata_defaults: false
-    show-sql: false
+    show-sql: true
 
 kafka:
   signup-topic: signup_service_persist_service_topic
@@ -31,3 +31,4 @@ kafka:
   bootstrap-servers: localhost:9092
   enable-autocommit: false
   auto-offset-reset: latest
+  isolation-level: read_committed

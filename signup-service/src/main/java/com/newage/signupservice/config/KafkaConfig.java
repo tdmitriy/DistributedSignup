@@ -19,11 +19,8 @@ import org.springframework.kafka.listener.KafkaMessageListenerContainer;
 import org.springframework.kafka.requestreply.ReplyingKafkaTemplate;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 import org.springframework.kafka.support.serializer.JsonSerializer;
-import org.springframework.kafka.transaction.KafkaTransactionManager;
-import org.springframework.transaction.support.AbstractPlatformTransactionManager;
 
 import java.util.Map;
-import java.util.UUID;
 
 @Configuration
 @EnableKafka
@@ -41,6 +38,9 @@ public class KafkaConfig {
     @Value("${kafka.auto-offset-reset}")
     private String autoOffsetReset;
 
+    @Value("${kafka.isolation-level}")
+    private String isolationLevel;
+
     @Value("${kafka.enable-autocommit}")
     private boolean enableAutoCommit;
 
@@ -57,7 +57,6 @@ public class KafkaConfig {
     public ProducerFactory<String, PlayerSignUpEvent> producerFactory() {
         DefaultKafkaProducerFactory<String, PlayerSignUpEvent> producerFactory = new DefaultKafkaProducerFactory<>(producerConfig());
         producerFactory.setValueSerializer(new JsonSerializer<>());
-//        producerFactory.setTransactionIdPrefix(String.format("signup-service:%s", UUID.randomUUID().toString()));
 
         return producerFactory;
     }
@@ -73,13 +72,6 @@ public class KafkaConfig {
     public ConsumerFactory<String, PlayerPersistenceEvent> consumerFactory() {
         return new DefaultKafkaConsumerFactory<>(consumerConfig(), new StringDeserializer(), new JsonDeserializer<>(PlayerPersistenceEvent.class, false));
     }
-
-//    @Bean
-//    public KafkaTransactionManager<String, PlayerSignUpEvent> kafkaTransactionManager() {
-//        var ktm = new KafkaTransactionManager<>(producerFactory());
-//        ktm.setTransactionSynchronization(AbstractPlatformTransactionManager.SYNCHRONIZATION_ON_ACTUAL_TRANSACTION);
-//        return ktm;
-//    }
 
     @Bean
     public Map<String, Object> producerConfig() {
@@ -99,7 +91,7 @@ public class KafkaConfig {
                 ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class,
                 ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, autoOffsetReset,
                 ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, enableAutoCommit,
-                ConsumerConfig.ISOLATION_LEVEL_CONFIG, "read_committed"
+                ConsumerConfig.ISOLATION_LEVEL_CONFIG, isolationLevel
         );
     }
 }
