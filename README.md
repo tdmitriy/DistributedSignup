@@ -7,4 +7,5 @@ Test task - system allows to signup a player and store his data in persistence s
 3. Run `sh start_app.sh` to build all microservices, docker images and also it runs docker compose command
 4. Wait for `docker-compose` build
 5. Run [http://localhost:8081/swagger-ui.html](http://localhost:8081/swagger-ui.html) and test functionality
-6. Run `sh stop_app.sh` to stop compose
+6. To start system tests against system - run `sh start_system_tests.sh`
+7. Run `sh stop_app.sh` to stop compose
