@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.Instant;
 import java.util.UUID;
 
 @Data
@@ -15,7 +14,6 @@ import java.util.UUID;
 public class PlayerPersistenceEvent {
     private UUID playerId;
     private String playerEmail;
-    private Instant signUpDateTime;
     private PlayerPersistenceStatus status;
     private String statusDescription;
 }
