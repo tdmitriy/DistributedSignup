@@ -1,30 +1,18 @@
 package com.newage.persistenceservice;
 
-import com.newage.persistenceservice.model.entity.Player;
 import org.junit.Ignore;
 import org.junit.Test;
-
-import java.util.Optional;
-
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 @Ignore
-public class PersistenceServiceApplicationTests extends AbstractApplicationTest {
+@RunWith(SpringRunner.class)
+@SpringBootTest
+public class PersistenceServiceApplicationTests {
 
     @Test
-    public void playerRepositoryTest() {
-        Player player = new Player();
-        player.setEmail("xyi");
-        player.setPassword("xyi");
+    public void test() {
 
-        Player saved = playerRepository.save(player);
-        assertNotNull(saved);
-
-        Optional<Player> foundById = playerRepository.findById(saved.getId());
-        assertTrue(foundById.isPresent());
-
-        Optional<Player> foundByEmail = playerRepository.findById(saved.getId());
-        assertTrue(foundByEmail.isPresent());
     }
 }

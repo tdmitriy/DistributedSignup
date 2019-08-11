@@ -11,16 +11,8 @@
     </appender>
 
     <logger name="com.newage" level="DEBUG"/>
-    <logger name="org.springframework.transaction" level="ERROR"/>
-    <logger name="org.springframework.kafka.transaction" level="ERROR"/>
-    <logger name="org.springframework.jdbc" level="ERROR"/>
     <logger name="org.springframework" level="WARN"/>
-    <logger name="org.apache.kafka" level="ERROR"/>
-    <logger name="liquibase" level="WARN"/>
-    <!--<logger name="org.hibernate.sql" level="DEBUG"/>-->
-    <!--<logger name="org.hibernate.type" level="TRACE"/>-->
 
-    <!-- LOG everything at INFO level -->
     <root level="INFO">
         <appender-ref ref="CONSOLE"/>
     </root>

@@ -1,14 +1,15 @@
 allprojects {
-	repositories {
-		jcenter()
-		mavenCentral()
-		maven { url "https://repo.spring.io/libs-snapshot" }
-		maven { url "https://repo.spring.io/libs-release" }
-	}
+    repositories {
+        jcenter()
+        mavenCentral()
+        maven { url "https://repo.spring.io/libs-snapshot" }
+        maven { url "https://repo.spring.io/libs-release" }
+    }
 }
 
 subprojects {
-	task buildAll(type: GradleBuild) {
-		tasks = ['buildDocker']
-	}
+    task buildAll(type: GradleBuild) {
+        if (project.name != 'system-tests')
+            tasks = ['buildDocker']
+    }
 }

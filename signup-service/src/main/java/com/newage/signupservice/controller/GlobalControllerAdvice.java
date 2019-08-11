@@ -1,5 +1,6 @@
 package com.newage.signupservice.controller;
 
+import com.newage.signupservice.exception.ConflictException;
 import com.newage.signupservice.exception.ValidationException;
 import com.newage.signupservice.model.dto.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +33,16 @@ public class GlobalControllerAdvice {
 
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
+                .body(response);
+    }
+
+    @ExceptionHandler(ConflictException.class)
+    public ResponseEntity<ErrorResponse> entityConflictHandler(ConflictException ex) {
+        log.error("Conflict exception. {}", ex.getMessage());
+        ErrorResponse response = new ErrorResponse(String.format("Conflict exception: %s", ex.getMessage()));
+
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
                 .body(response);
     }
 

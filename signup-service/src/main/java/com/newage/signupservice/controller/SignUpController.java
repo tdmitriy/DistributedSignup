@@ -1,5 +1,6 @@
 package com.newage.signupservice.controller;
 
+import com.newage.signupservice.exception.ConflictException;
 import com.newage.signupservice.exception.ValidationException;
 import com.newage.signupservice.model.dto.SignUpRequestDto;
 import com.newage.signupservice.model.dto.SignUpResponseDto;
@@ -38,6 +39,8 @@ public class SignUpController {
                 return ResponseEntity.status(HttpStatus.CREATED).body(response);
             case VALIDATE_ERROR:
                 throw new ValidationException(receivedEvent.getStatusDescription());
+            case CONFLICT_ERROR:
+                throw new ConflictException(receivedEvent.getStatusDescription());
             default:
                 throw new RuntimeException("Error.");
         }

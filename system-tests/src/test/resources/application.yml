@@ -1,5 +1,5 @@
-server:
-  port: 8082
+signup-service:
+  sign-up-url: http://localhost:8081/sign-up
 
 spring:
   main:
@@ -23,16 +23,6 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQL94Dialect
-        format_sql: true
+        format_sql: false
         temp.use_jdbc_metadata_defaults: false
     show-sql: false
-
-kafka:
-  bootstrap:
-    servers: localhost:9092
-  signup-topic: signup_service_persist_service_topic
-  reply-topic: reply_persist_service_signup_service_topic
-  reply-group: persist_service_group
-  enable-autocommit: false
-  auto-offset-reset: latest
-  isolation-level: read_committed

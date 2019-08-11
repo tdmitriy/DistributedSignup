@@ -46,7 +46,7 @@ public class SignUpReplyEventListener {
         }
 
         if (playerRepository.findByEmail(player.getEmail()).isPresent()) {
-            response.status(PlayerPersistenceStatus.VALIDATE_ERROR)
+            response.status(PlayerPersistenceStatus.CONFLICT_ERROR)
                     .statusDescription(String.format("Player with given email: '%s' already exists.", player.getEmail()));
             return response.build();
         }

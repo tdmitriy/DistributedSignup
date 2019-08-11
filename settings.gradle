@@ -1,2 +1,2 @@
 rootProject.name = 'DistributedSignup'
-include 'persistence-service', 'signup-service'
+include 'persistence-service', 'signup-service', 'system-tests'
