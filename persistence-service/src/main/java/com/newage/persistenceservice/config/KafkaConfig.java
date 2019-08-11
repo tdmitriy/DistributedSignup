@@ -28,7 +28,7 @@ import java.util.UUID;
 @Configuration
 public class KafkaConfig {
 
-    @Value("${kafka.bootstrap-servers}")
+    @Value("${kafka.bootstrap.servers}")
     private String bootstrapServers;
 
     @Value("${kafka.signup-topic}")

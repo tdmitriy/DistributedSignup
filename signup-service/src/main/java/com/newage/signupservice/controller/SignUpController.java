@@ -9,8 +9,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,29 +25,21 @@ public class SignUpController {
     private final SignUpService signUpService;
 
     @PostMapping(produces = APPLICATION_JSON_UTF8_VALUE, consumes = APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<SignUpResponseDto> signUpPlayer(@RequestBody SignUpRequestDto dto, BindingResult errors) {
+    public ResponseEntity<SignUpResponseDto> signUpPlayer(@RequestBody SignUpRequestDto dto) {
         log.info("Sign-up player REST request received: {}", dto);
 
         var event = new PlayerSignUpEvent(dto.getEmail(), dto.getPassword());
         var receivedEvent = signUpService.sendAndReceive(event);
+        log.info("Received event: {}", receivedEvent);
 
         switch (receivedEvent.getStatus()) {
             case OK:
                 var response = new SignUpResponseDto(receivedEvent.getPlayerId().toString());
                 return ResponseEntity.status(HttpStatus.CREATED).body(response);
             case VALIDATE_ERROR:
-                throw new RuntimeException("Validation Error.");
+                throw new ValidationException(receivedEvent.getStatusDescription());
             default:
                 throw new RuntimeException("Error.");
         }
-    }
-
-
-    private void validateRequest(SignUpRequestDto dto) {
-        if (dto == null)
-            throw new ValidationException("Request is empty.");
-
-        if (StringUtils.isEmpty(dto.getEmail()) || StringUtils.isEmpty(dto.getPassword()))
-            throw new ValidationException("Email and password are required.");
     }
 }

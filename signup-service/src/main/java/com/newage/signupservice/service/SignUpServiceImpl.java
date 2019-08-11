@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.requestreply.ReplyingKafkaTemplate;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
@@ -26,7 +25,6 @@ public class SignUpServiceImpl implements SignUpService {
     private String replyTopic;
 
     @Override
-//    @Transactional
     public PlayerPersistenceEvent sendAndReceive(PlayerSignUpEvent event) {
         try {
             ProducerRecord<String, PlayerSignUpEvent> record = new ProducerRecord<>(signUpTopic, event);

@@ -9,10 +9,11 @@ spring:
       enabled: always
 
 kafka:
+  bootstrap:
+    servers: localhost:9092
   signup-topic: signup_service_persist_service_topic
   reply-topic: reply_signup_service_persist_service_topic
   reply-group: signup_service_group
-  bootstrap-servers: localhost:9092
   enable-autocommit: false
   auto-offset-reset: latest
   isolation-level: read_committed

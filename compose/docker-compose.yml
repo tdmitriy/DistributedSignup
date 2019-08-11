@@ -19,7 +19,7 @@ services:
   kafka:
     image: wurstmeister/kafka:2.12-2.3.0
     environment:
-      KAFKA_ADVERTISED_HOST_NAME: localhost
+      KAFKA_ADVERTISED_HOST_NAME: kafka
       KAFKA_ADVERTISED_PORT: 9092
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'false'
@@ -34,26 +34,29 @@ services:
     depends_on:
       - zookeeper
 
-#  signup-service:
-#    image: 'signup-service:0.0.1-SNAPSHOT'
-#    ports:
-#      - 8081:8081
-#    restart: on-failure
-#    environment:
-#      - SERVER_PORT=8081
-#      - TZ=Europe/Kiev
-#    depends_on:
-#      - kafka
-#      - postgres
-#
-#  persistence-service:
-#    image: 'persistence-service:0.0.1-SNAPSHOT'
-#    ports:
-#      - 8082:8082
-#    restart: on-failure
-#    environment:
-#      - SERVER_PORT=8082
-#      - TZ=Europe/Kiev
-#    depends_on:
-#      - kafka
-#      - postgres
+  signup-service:
+    image: 'signup-service:0.0.1-SNAPSHOT'
+    ports:
+      - 8081:8081
+    restart: on-failure
+    environment:
+      - SERVER_PORT=8081
+      - KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+      - TZ=Europe/Kiev
+    depends_on:
+      - kafka
+      - postgres
+
+  persistence-service:
+    image: 'persistence-service:0.0.1-SNAPSHOT'
+    ports:
+      - 8082:8082
+    restart: on-failure
+    environment:
+      - SERVER_PORT=8082
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/ps_db
+      - KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+      - TZ=Europe/Kiev
+    depends_on:
+      - kafka
+      - postgres

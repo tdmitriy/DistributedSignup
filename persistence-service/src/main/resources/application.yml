@@ -1,3 +1,6 @@
+server:
+  port: 8082
+
 spring:
   main:
     banner-mode: "off"
@@ -25,10 +28,11 @@ spring:
     show-sql: true
 
 kafka:
+  bootstrap:
+    servers: localhost:9092
   signup-topic: signup_service_persist_service_topic
   reply-topic: reply_persist_service_signup_service_topic
   reply-group: persist_service_group
-  bootstrap-servers: localhost:9092
   enable-autocommit: false
   auto-offset-reset: latest
   isolation-level: read_committed
