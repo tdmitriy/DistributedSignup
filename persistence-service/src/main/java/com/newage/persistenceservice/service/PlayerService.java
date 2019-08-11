@@ -1,13 +1,16 @@
 package com.newage.persistenceservice.service;
 
+import com.newage.persistenceservice.exception.ValidationException;
 import com.newage.persistenceservice.model.entity.Player;
+import com.newage.persistenceservice.model.event.PlayerSignUpEvent;
 
+import java.util.Optional;
 import java.util.UUID;
 
 public interface PlayerService {
-    void registerPlayer(Player player);
+    Player registerPlayer(PlayerSignUpEvent event) throws ValidationException;
 
-    Player findById(UUID uuid);
+    Optional<Player> findById(UUID uuid);
 
-    Player findByEmail(String email);
+    Optional<Player> findByEmail(String email);
 }

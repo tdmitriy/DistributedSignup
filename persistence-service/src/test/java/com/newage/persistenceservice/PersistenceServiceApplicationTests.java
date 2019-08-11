@@ -19,7 +19,6 @@ public class PersistenceServiceApplicationTests extends AbstractApplicationTest 
         Player player = new Player();
         player.setEmail("xyi");
         player.setPassword("xyi");
-        player.setSignUpDateTime(Instant.now());
 
         Player saved = playerRepository.save(player);
         assertNotNull(saved);
@@ -35,7 +34,6 @@ public class PersistenceServiceApplicationTests extends AbstractApplicationTest 
         Player player = new Player();
         player.setEmail("sss");
         player.setPassword("sss");
-        player.setSignUpDateTime(Instant.now());
 
         Player saved = playerRepository.save(player);
         assertNotNull(saved);

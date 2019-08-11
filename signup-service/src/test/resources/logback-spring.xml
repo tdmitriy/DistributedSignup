@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <appender name="CONSOLE"
+              class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>
+                %black(%d{ISO8601}) %highlight(%-5level) [%blue(%t)] %yellow(%C{1.}): %msg%n%throwable
+            </Pattern>
+        </layout>
+    </appender>
+
+    <logger name="com.newage" level="DEBUG"/>
+    <logger name="org.springframework" level="WARN"/>
+    <logger name="org.apache.kafka" level="ERROR"/>
+    <logger name="liquibase" level="WARN"/>
+    <!--<logger name="org.hibernate.sql" level="DEBUG"/>-->
+    <!--<logger name="org.hibernate.type" level="TRACE"/>-->
+
+    <!-- LOG everything at INFO level -->
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+    </root>
+
+</configuration>

@@ -47,6 +47,9 @@ dependencies {
 	compileOnly("org.projectlombok:lombok:${lombokVersion}")
 	annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
 
+	implementation("io.springfox:springfox-swagger2:$swaggerSpringFoxVersion")
+	implementation("io.springfox:springfox-swagger-ui:$swaggerSpringFoxVersion")
+
 	implementation("org.springframework.boot:spring-boot-starter")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.boot:spring-boot-starter-actuator")

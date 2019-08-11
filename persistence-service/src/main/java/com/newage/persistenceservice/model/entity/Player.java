@@ -1,12 +1,12 @@
 package com.newage.persistenceservice.model.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.Instant;
 import java.util.UUID;
 
 @Data
@@ -14,6 +14,7 @@ import java.util.UUID;
 @Table(name = "player")
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Player implements Serializable {
 
     @Id
@@ -26,7 +27,4 @@ public class Player implements Serializable {
 
     @Column(name = "password")
     private String password;
-
-    @Column(name = "sign_up_ts")
-    private Instant signUpDateTime;
 }

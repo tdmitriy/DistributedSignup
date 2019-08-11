@@ -1,1 +1,17 @@
+server:
+  port: 8081
 
+spring:
+  main:
+    banner-mode: "off"
+  output:
+    ansi:
+      enabled: always
+
+kafka:
+  signup-topic: signup_service_persist_service_topic
+  reply-topic: reply_signup_service_persist_service_topic
+  reply-group: signup_service_group
+  bootstrap-servers: localhost:9092
+  enable-autocommit: false
+  auto-offset-reset: latest
